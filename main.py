@@ -7,6 +7,8 @@ import json
 import wolframalpha
 from memory import Memory
 from uuid import uuid4
+from flask import Flask
+import threading
 
 load_dotenv()
 
@@ -232,3 +234,24 @@ client.run_until_disconnected()
     if ZORG_JAILBREAK == True:
         result += '\n\nDid you find this information helpful? Do you have any further questions?'
         await msg.edit(result, parse_mode='html')
+        
+# Funzione per eseguire il bot
+def run_bot():
+    client.start(bot_token=bot_token)
+    client.run_until_disconnected()
+
+# Configurazione di Flask per Render.com
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Il bot Telegram è in esecuzione!"
+
+# Esegui Flask e il bot in parallelo
+if __name__ == '__main__':
+    # Avvia il bot in un thread separato
+    bot_thread = threading.Thread(target=run_bot)
+    bot_thread.start()
+
+    # Avvia il server Flask su Render
+    app.run(host='0.0.0.0', port=10000)
