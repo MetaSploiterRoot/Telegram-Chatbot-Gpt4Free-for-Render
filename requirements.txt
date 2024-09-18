@@ -9,3 +9,4 @@ browser_cookie3==0.19.1
 pandas==1.2.3
 pyarrow==4.0.0
 flask==2.0.1
+gunicorn==20.1.0
